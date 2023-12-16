@@ -12,6 +12,11 @@ student_frontend/node_modules/coverage
 # production
 student_frontend/node_modules/build
 
+# spring misc files
+studentsystem/.idea/
+studentsystem/HELP.md
+studentsystem/target/
+
 # misc
 student_frontend/node_modules/.DS_Store
 student_frontend/node_modules/.env.local
