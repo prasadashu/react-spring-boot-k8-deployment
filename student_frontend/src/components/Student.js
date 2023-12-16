@@ -4,8 +4,8 @@ import TextField from '@mui/material/TextField';
 import { Container, Paper, Button } from '@mui/material';
 
 export default function Student() {
-    console.log("ADD URL:", "http://localhost:8080/student/add");
-    console.log("FETCH URL:", "http://localhost:8080/student/getAll");
+    console.log("ADD URL:", "http://localhost:31000/student/add");
+    console.log("FETCH URL:", "http://localhost:31000/student/getAll");
     // Define style for boxes
     const paperStyle = {padding: '50px 20px', width: 600, margin: "20px auto"}
 
@@ -30,7 +30,7 @@ export default function Student() {
         // Check if 'name' and 'address' are not empty
         if(name.length > 0 && address.length > 0) {
             // Push name and address to Spring Boot Application layer
-            fetch("http://localhost:8080/student/add", {
+            fetch("http://localhost:31000/student/add", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(student)
@@ -50,7 +50,7 @@ export default function Student() {
 
     // Fetch student details
     React.useEffect(() => {
-        fetch("http://localhost:8080/student/getAll")
+        fetch("http://localhost:31000/student/getAll")
         .then(response => response.json())
         .then((result) => {
             setStudents(result);
