@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+# Metadata of MySQL Deployment
+metadata:
+  name: mysql-deployment
+  labels:
+    app: mysql
+    tier: database
+spec:
+  # Number of MySQL PODs we want running by default
+  replicas: 1
+  # IMPORTANT: Must match 'labels' of MySQL POD
+  selector:
+    matchLabels:
+      app: mysql
+      tier: database
+  strategy:
+    type: Recreate
+  # Definition of MySQL PODs
+  template:
+    # Metadata of MySQL POD
+    # IMPORTANT: Must match 'matchLabels' in 'selector'
+    metadata:
+      labels:
+        app: mysql
+        tier: database
+    # Specifications of the POD
+    spec:
+      # Specifications of the container in the POD
+      containers:
+        - name: mysql
+          image: mysql:8.2.0
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+          env:
+            # Get secret env variables from secrets file
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets 
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets 
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets 
+                  key: MYSQL_PASSWORD
+            # Get config details from config map
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: MYSQL_DATABASE
+      # Specifications of the persistent volume attached to database
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc

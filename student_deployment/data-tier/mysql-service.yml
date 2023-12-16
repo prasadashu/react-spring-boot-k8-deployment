@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # Metadata for the MySQL service
+  name: mysql-service
+  labels:
+    app: mysql
+    tier: database
+spec:
+  # Specifications for the service
+  ports:
+    # Service - Virtual Server port
+    - port: 3306
+    # POD port
+      targetPort: 3306
+  # Must match the labels of POD
+  selector:
+    app: mysql
+    tier: database
+  # Headless Mode enabled
+  # Each POD will get it's own entry in DNS
+  # In contrast to having a single service name in DNS for Load Balancing
+  clusterIP: None
