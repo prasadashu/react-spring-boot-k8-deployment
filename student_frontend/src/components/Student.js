@@ -4,8 +4,6 @@ import TextField from '@mui/material/TextField';
 import { Container, Paper, Button } from '@mui/material';
 
 export default function Student() {
-    console.log("ADD URL:", "http://localhost:31000/student/add");
-    console.log("FETCH URL:", "http://localhost:31000/student/getAll");
     // Define style for boxes
     const paperStyle = {padding: '50px 20px', width: 600, margin: "20px auto"}
 
