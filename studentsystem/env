@@ -1,0 +1,6 @@
+MYSQL_HOST=mysql-server
+MYSQL_PORT=3306
+MYSQL_DATABASE=fullstack
+MYSQL_USER=dbUser
+MYSQL_PASSWORD=dbPassword
+MYSQL_ROOT_PASSWORD=my-secret-pw
