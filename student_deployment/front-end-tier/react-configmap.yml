@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: react-configmap
+data:
+  SPRING_BOOT_HOST: spring-service   # DNS of application tier
+  SPRING_BOOT_PORT: "8080"           # Must be converted to string

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+# Metadata for React Deployment
+metadata:
+  name: react-deployment
+  labels:
+    app: react
+    tier: front-end
+spec:
+  # Number of Spring PODs we want running by default
+  replicas: 1
+  # IMPORTANT: Must match 'labels' of React POD
+  selector:
+    matchLabels:
+      app: react
+      tier: front-end
+  strategy:
+    type: Recreate
+  # Definition of React PODs
+  template:
+    # Metadata of Spring POD
+    # IMPORTANT: Must match 'matchLabels' in 'selector'
+    metadata:
+      labels:
+        app: react
+        tier: front-end
+    # Specifications of the POD
+    spec:
+      # Specifications of the container in the POD
+      containers:
+        - name: react
+          image: ashuprasaddocker/reactui:latest
+          ports:
+            - containerPort: 3000
+          env:
+            # Get config details from config map
+            - name: SPRING_BOOT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: react-configmap
+                  key: SPRING_BOOT_HOST
+            - name: SPRING_BOOT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: react-configmap
+                  key: SPRING_BOOT_PORT
