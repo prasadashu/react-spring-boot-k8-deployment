@@ -13,9 +13,9 @@ student_frontend/node_modules/coverage
 student_frontend/node_modules/build
 
 # spring misc files
-studentsystem/.idea/
-studentsystem/HELP.md
-studentsystem/target/
+student_system/.idea/
+student_system/HELP.md
+student_system/target/
 
 # misc
 student_frontend/node_modules/.DS_Store
