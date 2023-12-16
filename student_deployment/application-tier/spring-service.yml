@@ -8,14 +8,16 @@ metadata:
     tier: application
 spec:
   # Specifications for the service
+  # Set type of Service as ClusterIP
+  type: NodePort
   ports:
     # Service - Virtual Server port
     - port: 8080
     # POD port
       targetPort: 8080
+    # Host port
+      nodePort: 31000
   # Must match the labels of POD
   selector:
     app: spring
     tier: application
-  # Set type of Service as ClusterIP
-  type: ClusterIP
