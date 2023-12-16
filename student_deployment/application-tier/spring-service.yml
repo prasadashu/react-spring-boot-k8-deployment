@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # Metadata for the Spring service
+  name: spring-service
+  labels:
+    app: spring
+    tier: application
+spec:
+  # Specifications for the service
+  ports:
+    # Service - Virtual Server port
+    - port: 8080
+    # POD port
+      targetPort: 8080
+  # Must match the labels of POD
+  selector:
+    app: spring
+    tier: application
+  # Set type of Service as ClusterIP
+  type: ClusterIP

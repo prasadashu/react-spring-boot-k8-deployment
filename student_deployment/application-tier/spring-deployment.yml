@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+# Metadata for Spring Deployment
+metadata:
+  name: spring-deployment
+  labels:
+    app: spring
+    tier: application
+spec:
+  # Number of Spring PODs we want running by default
+  replicas: 1
+  # IMPORTANT: Must match 'labels' of Spring POD
+  selector:
+    matchLabels:
+      app: spring
+      tier: application
+  strategy:
+    type: Recreate
+  # Definition of Spring PODs
+  template:
+    # Metadata of Spring POD
+    # IMPORTANT: Must match 'matchLabels' in 'selector'
+    metadata:
+      labels:
+        app: spring
+        tier: application
+    # Specifications of containers
+    spec:
+      containers:
+        - name: spring
+          image: ashuprasaddocker/springapi:latest
+          ports:
+            - containerPort: 8080
+          env:
+            # Get config details from config map
+            - name: MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: spring-configmap
+                  key: MYSQL_HOST
+            - name: MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: spring-configmap
+                  key: MYSQL_PORT
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: spring-configmap
+                  key: MYSQL_DATABASE
+            # Get secret env variables from secrets file
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: spring-secrets
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-secrets
+                  key: MYSQL_PASSWORD
+
