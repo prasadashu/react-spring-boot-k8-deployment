@@ -154,3 +154,8 @@ kubectl port-forward svc/<service_name> <host_port>:<node_port>
 ## Access React UI
 
 - The React UI can be accessed at port `30000`.
+
+## Miscellaneous
+- Spring Boot Version: `v3.2.0`
+- JDK Version: `21.0.1`
+- Minikube: `v1.32.0`
