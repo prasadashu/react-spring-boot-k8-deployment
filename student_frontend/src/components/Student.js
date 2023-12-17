@@ -3,6 +3,17 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Container, Paper, Button } from '@mui/material';
 
+const fetchStudentDetails = (setStudents) => {
+    /**
+     * Function to fetch data from database
+     */
+    fetch("http://localhost:31000/student/getAll")
+        .then(response => response.json())
+        .then((result) => {
+            setStudents(result);
+        });
+};
+
 export default function Student() {
     // Define style for boxes
     const paperStyle = {padding: '50px 20px', width: 600, margin: "20px auto"}
@@ -15,8 +26,8 @@ export default function Student() {
     const[students, setStudents] = React.useState([])
 
     const handleClick = (e) => {
-        /*
-            Function to handle button click events
+        /**
+         *  Function to handle button click events
          */
         // Prevent default behaviour of event to handle custom logic
         e.preventDefault()
@@ -39,20 +50,22 @@ export default function Student() {
                 // Empty the fields
                 setName('');
                 setAddress('');
+
+                // Call function to fetch database data
+                fetchStudentDetails(setStudents);
+            }).catch(error => {
+                console.error("Error adding new student:", error);
             })
         }
         else {
-            console.log("Fields are empty")
+            console.log("Fields are empty");
         }
     }
 
     // Fetch student details
     React.useEffect(() => {
-        fetch("http://localhost:31000/student/getAll")
-        .then(response => response.json())
-        .then((result) => {
-            setStudents(result);
-        })
+        // Call function to fetch database data
+        fetchStudentDetails(setStudents);
     }, [])
 
   return (
